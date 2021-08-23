@@ -5,30 +5,39 @@ char *ft_strtrim(char const *s)
 {
     size_t len;
     int spaces = 0;
+    int start = -1;
+    int end = 0;
     
     for (len = 0; s[len]; len++)
     {
         if (s[len] == ' ' || s[len] == '\n' || s[len] == '\t')
         {
-            spaces++;
+            if (start == -1)
+            {
+                spaces++;
+            }
+        }
+        else if (start == -1)
+        {
+            start = len;
+        }
+        else
+        {
+            end = len;
         }
     }
-
-    len = len - spaces;
-    char *res = (char *) malloc(len + 1);
+    if (spaces >= end)
+    {
+        spaces = 1;
+    }
+    
+    char *res = (char *) malloc(end - spaces + 1 + 1);
     if (!res)
     {
         return NULL;
     }
-    
-    while (*s++)
-    {
-        if (*s != ' ' && *s != '\n' && *s != '\t')
-        { 
-            *res++ = *s;
-        }
-    }
-    *res = '\0';
+    ft_memcpy(res, &s[spaces], end - spaces + 1);
+    res[end - spaces + 1] = '\0';
 
     return res;
 }
