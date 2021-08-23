@@ -9,8 +9,12 @@ char *ft_strjoin(char const *s1, char const *s2)
     for (s2_len = 0; s2[s2_len]; s2_len++);
 
     char *res = (char *) malloc(s1_len + s2_len + 1);
+    if (!res)
+    {
+        return NULL;
+    }
+    
     int count = 0;
-
     for (size_t i = 0; i < s1_len; i++)	    
     {
         res[count++] = s1[i];
